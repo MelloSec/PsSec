@@ -12,6 +12,8 @@ Now just run 'Quick-Scan', etc
 
 ## Nmap Functions
 
+![image](https://user-images.githubusercontent.com/65114647/175846428-63a434a9-2820-475b-8f4b-a5dcffb14a75.png)
+
 'Quick Scan'
 'Scan-Subnet'
 'Ping-Sweep' 
@@ -28,6 +30,9 @@ Now just run 'Quick-Scan', etc
 'Enum-NFS'
 
 ## SMB Functions
+
+![image](https://user-images.githubusercontent.com/65114647/175846365-3c5cc6bd-c966-4360-a22c-9311f202f1e3.png)
+
 
 'nbt-scan'
 'smbmap-guest'
