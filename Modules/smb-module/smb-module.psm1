@@ -23,7 +23,6 @@ function smb-list {
 }
 
 function smb-playbook {
-
     function nbt-scan {
         nbtscan -r $ip 
     }
