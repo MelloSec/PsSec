@@ -6,12 +6,17 @@ function SV-Scan {
     nmap -sV -sC -A -vv -oN _nmap_tcp_asc $ip
 }
 
+
 function Tcp-Scans {
     $scan1 = nmap -sV -sC -A -vv $ip
-    $scan2 = nmap -sV -sC -p- -T4 -vv $ip
+    $scan2 = nmap -sV -sC -Pn -p- -T4 -vv $ip
     $scans = $scan1,$scan2
     $Results  = New-Item tcp-scans.txt 
     Set-Content $scans -Path $Results.Name
+}
+
+function Vulner-Scan {
+    nmap -Pn -sV -vv --script vulners --script-args mincvss=5.0 -oN _nmap_vulner $ip
 }
 
 function Old-Tcp {

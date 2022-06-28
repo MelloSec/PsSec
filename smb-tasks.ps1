@@ -12,11 +12,6 @@ function Nmb-Lookup {
 }
 $nmblookup = Nmb-Lookup
 
-function Enum4-basic {
-    enum4linux -a -v
-}
-$enum4 = Enum4-basic
-
 function Enum4-Deep {
     enum4linux -a -v -d -U -M $ip
 }
