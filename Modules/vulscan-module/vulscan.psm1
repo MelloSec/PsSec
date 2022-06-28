@@ -20,7 +20,7 @@ function Double-Vuln {
 }
 Double-Vuln 
 
-function Double-Vuln {
+function Triple-Vuln {
     function Invoke-Vulscan {
         nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
     }

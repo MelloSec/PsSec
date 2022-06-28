@@ -5,3 +5,25 @@ function Scan-Web {
     $Results  = New-Item web-scans.txt 
     Set-Content $scans -Path $Results.Name
 }
+Scan-Web
+
+# if contains web ports kick off gobuster and feroxbuster
+
+
+# If $scans -contains $webPorts, certain services, kick off vuln scans
+function Triple-Vuln {
+    function Invoke-Vulscan {
+        nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
+    }
+    function Invoke-Vulners {
+        nmap -vv -sV -Pn --script nmap-vulners/ -oA vulners $ip   
+    }
+    function Invoke-Vuln {
+        nmap -Pn --script vuln -oA vuln  $ip
+    }
+    Invoke-Vulscan
+    Invoke-Vulners
+    Invoke-Vuln
+}
+Triple-Vuln
+
