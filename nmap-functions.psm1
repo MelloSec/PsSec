@@ -1,16 +1,40 @@
-function Quick-Scan {
+function Os-Scan {
     nmap -O --osscan-guess -sV -vv -oN _nmap_tcp_quick $ip
 }
 
-function Tcp-Scans {
+function SV-Scan {
     nmap -sV -sC -A -vv -oN _nmap_tcp_asc $ip
-    nmap -sV -p- -T4 -vv -oN _nmap_tcp_p $ip
 }
 
+function Tcp-Scans {
+    $scan1 = nmap -sV -sC -A -vv $ip
+    $scan2 = nmap -sV -sC -p- -T4 -vv $ip
+    $scans = $scan1,$scan2
+    $Results  = New-Item tcp-scans.txt 
+    Set-Content $scans -Path $Results.Name
+}
+
+function Old-Tcp {
+    nmap -sV -sC -A -vv -oN _nmap_tcp_asc $ip
+    nmap -sV -sC -p- -T4 -vv -oN _nmap_tcp_p $ip
+}
+
+function su-scan {
+    nmap -sU -Pn -vv --top-ports 1000 -oN _nmap_su $ip
+}
 function udp-scans {
+    $scan1 = nmap -sU -Pn -vv --top-ports 1000 $ip
+    $scan2 = nmap -sU -Pn vv -T4 --max-retries 0 $ip
+    $scans = $scan1,$scan2
+    $Results  = New-Item udp-scans.txt 
+    Set-Content $scans -Path $Results.Name
+}
+
+function Old-Udp {
     nmap -sU -vv --top-ports 1000 -oN _nmap_udp_1000 $ip
     nmap -sU --Pn vv -T4 --max-retries 0 -oN _nmap_udp_2 $ip
 }
+
 
 function Long-Scans {
     nmap -sC -sV -A -p- -T4 -vv -oN _nmap_tcp_full $ip

@@ -17,3 +17,7 @@ function Enum4-basic {
 function Enum4-Deep {
     enum4linux -a -v -d -U -M $ip
 }
+
+function smb-list {
+    smbclient -L $ip 
+}

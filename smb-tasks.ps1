@@ -26,3 +26,6 @@ $Results = $nbtscan,$smbmap,$nmblookup,$enum4,$Enum4Deep
 
 New-Item smb-func-results.txt 
 Set-Content $Results -Path smb-func-results.txt
+
+Write-Output "Scans complete"
+#
