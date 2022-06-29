@@ -18,7 +18,7 @@ function Double-Vuln {
     Invoke-Vulscan
     Invoke-Vulners
 }
-Double-Vuln 
+
 
 function Triple-Vuln {
     function Invoke-Vulscan {
@@ -34,4 +34,3 @@ function Triple-Vuln {
     Invoke-Vulners
     Invoke-Vuln
 }
-Triple-Vuln
