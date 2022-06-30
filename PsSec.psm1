@@ -102,17 +102,14 @@ function ping-sweep {
 function force-scan {
     nmap -vvv -Pn -p- -sV -sC -A -oN _nmap_force $ip
 }
-function Invoke-Vulscan {
+function invoke-vulscan {
     nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
 }
-function Invoke-Vulners {
+function invoke-vulners {
     nmap -vv -sV -Pn --script nmap-vulners/ -oA vulners $ip   
 }
 
-function Invoke-Vuln {
-    nmap -Pn -sV --script vuln -oA vuln $ip
-}
-function Double-Vuln {
+function double-vuln {
     function Invoke-Vulscan {
         nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
     }
@@ -123,14 +120,14 @@ function Double-Vuln {
     Invoke-Vulners
 }
 
-function Triple-Vuln {
-    funDction Invoke-Vulscan {
+function triple-vuln {
+    function invoke-Vulscan {
         $scan1 = nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
-    function Invoke-Vulners {
+    function invoke-vulners {
         $scan2 = nmap -vv -sV -Pn --script nmap-vulners/ $ip   
     }
-    function Invoke-Vuln {
+    function invoke-vuln {
         $scan3 = nmap -vv -sV -Pn --script vuln  $ip
     }
     Invoke-Vulscan
@@ -141,7 +138,7 @@ function Triple-Vuln {
     Set-Content $scans -Path $Results.Name
 }
 
-function Deep-Vuln {
+function deep-vuln {
     function Invoke-Vulscan {
         $scan1 = nmap -vv -sV -p- -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
@@ -166,15 +163,15 @@ function smbmap-guest {
     smbmap -u "Guest" -p "poop" -H $ip 
 }
 
-function Nmb-Lookup {
+function nmb-lookup {
     nmblookup -A $ip 
 }
 
-function Enum4-basic {
+function enum4-basic {
     enum4linux -a -v
 }
 
-function Enum4-Deep {
+function enum4-deep {
     enum4linux -a -v -d -U -M $ip
 }
 
@@ -192,22 +189,22 @@ function smb-playbook {
     }
     $smbmap = smbmap-guest  
     
-    function Nmb-Lookup {
+    function nmb-lookup {
         nmblookup -A $ip 
     }
-    $nmblookup = Nmb-Lookup
+    $nmblookup = nmb-Lookup
     
-    function Enum4-basic {
+    function enum4-basic {
         enum4linux -a -v $ip
     }
-    $enum4 = Enum4-basic
+    $enum4 = enum4-basic
     
-    function Enum4-Deep {
+    function enum4-Deep {
         enum4linux -a -v -d -U -M $ip
     }
-    $Enum4Deep = Enum4-Deep
+    $enum4Deep = enum4-Deep
     
-    $Results = $nbtscan,$smbmap,$nmblookup,$enum4,$Enum4Deep
+    $Results = $nbtscan,$smbmap,$nmblookup,$enum4,$enum4Deep
     
     New-Item smb-func-results.txt 
     Set-Content $Results -Path smb-func-results.txt
