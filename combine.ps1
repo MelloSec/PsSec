@@ -16,7 +16,9 @@ Set-Content ./PsSec.psm1 $module
 
 function Test-Build {
     $test = Get-Content ./PsSec.psm1
-    $log = $test | Select -Last 20
-    Write-Output $log >> log.txt
+    $log = $test | Select -Last 15
+    $date = Get-Date
+    $msg = "Building New Module `n Last 15 lines added to PsSec: "
+    Write-Output $date, $msg, $log >> log.txt
 }
 Test-Build

@@ -151,13 +151,13 @@ function Triple-Vuln {
 
 function Deep-Vuln {
     function Invoke-Vulscan {
-        $scan1 = nmap -vv -sV -p- -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
+        $scan1 = nmap -vv -sV -p- -Pn -oA vulscan --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
     function Invoke-Vulners {
-        $scan2 = nmap -vv -sV -p- -Pn --script nmap-vulners/ $ip   
+        $scan2 = nmap -vv -sV -p- -Pn -oA  vulners --script nmap-vulners/ $ip   
     }
     function Invoke-Vuln {
-        $scan3 = nmap -vv -sV -p- -Pn --script vuln  $ip
+        $scan3 = nmap -vv -sV -p- -Pn -oA vuln --script vuln  $ip
     }
     Invoke-Vulscan
     Invoke-Vulners
