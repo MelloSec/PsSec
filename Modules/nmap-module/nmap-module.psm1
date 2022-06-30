@@ -104,7 +104,7 @@ function 5000-scan {
 }
 
 function ping-sweep {
-    nmap -sP -oN _nmap_ping_sweep $ip
+    nmap -sP -oN _nmap_pingsweep $ip
 }
 
 function force-scan {
