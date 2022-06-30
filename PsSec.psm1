@@ -210,6 +210,6 @@ function smb-playbook {
     Set-Content $Results -Path smb-func-results.txt
     
     Write-Output "Scans complete"
-
+    #
     
 }
