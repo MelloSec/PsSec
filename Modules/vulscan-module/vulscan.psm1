@@ -6,7 +6,7 @@ function Invoke-Vulners {
 }
 
 function Invoke-Vuln {
-    nmap -Pn --script vuln -oA vuln $ip
+    nmap -Pn -sV --script vuln -oA vuln $ip
 }
 function Double-Vuln {
     function Invoke-Vulscan {
@@ -19,7 +19,7 @@ function Double-Vuln {
     Invoke-Vulners
 }
 
-function eep-Vuln {
+function Triple-Vuln {
     funDction Invoke-Vulscan {
         $scan1 = nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
@@ -51,6 +51,6 @@ function Deep-Vuln {
     Invoke-Vulners
     Invoke-Vuln
     $scans = $scan1,$scan2,$scan3
-    $Results  = New-Item deepvuln-vuln.txt 
+    $Results  = New-Item deep-vuln.txt 
     Set-Content $scans -Path $Results.Name
 }
