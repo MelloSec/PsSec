@@ -1,22 +1,26 @@
 function os-scan {
-    nmap -O --osscan-guess -sV -vv -oN _nmap_tcp_quick $ip
+    nmap -O --osscan-guess -sV -vv -oN _nmap_os_scan $ip
 }
 
 function sv-scan {
-    nmap -sV -sC -A -vv -oN _nmap_tcp_asc $ip
+    nmap -sV -sC -A -vv -oN _nmap_tcp_sv $ip
+}
+
+function psv-scan {
+    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_psv $ip
 }
 
 
 function tcp-scan {
-    $scan1 = nmap -sV -sC -A -vv $ip
+    $scan1 = nmap -sV -sC -A -Pn -vv $ip
     $scan2 = nmap -sV -sC -Pn -p- -T4 -vv $ip
     $scans = $scan1,$scan2
-    $Results  = New-Item tcp-scans.txt 
+    $Results  = New-Item tcp-scan.txt 
     Set-Content $scans -Path $Results.Name
 }
 
 function vulners-scan {
-    nmap -Pn -sV -vv --script vulners --script-args mincvss=5.0 -oN _nmap_vulner $ip
+    nmap -Pn -sV -vv --script vulners --script-args mincvss=5.0 -oN _nmap_vulners $ip
 }
 
 function old-tcp {
@@ -28,17 +32,21 @@ function su-scan {
     nmap -sU -Pn -vv --top-ports 1000 -oN _nmap_su $ip
 }
 
+function psu-scan {
+    nmap -sU -p- -Pn -vv --top-ports 1000 -oN _nmap_psu $ip
+}
+
 function suv-scan {
     nmap -sUV -Pn -vv --top-ports 1000 -oN _nmap_suv $ip
 }
-function suv-scan {
-    nmap -sUV -Pn -p- -vv -T4 --max-retries 0 --top-ports 1000 -oN _nmap_suvp $ip
+function psuv-scan {
+    nmap -sUV -Pn -p- -vv -T4 --max-retries 0 --top-ports 1000 -oN _nmap_psuv $ip
 }
 function udp-scan {
     $scan1 = nmap -sU -Pn -vv --top-ports 1000 $ip
     $scan2 = nmap -sU -Pn vv -T4 --max-retries 0 $ip
     $scans = $scan1,$scan2
-    $Results  = New-Item udp-scans.txt 
+    $Results  = New-Item udp-scan.txt 
     Set-Content $scans -Path $Results.Name
 }
 
