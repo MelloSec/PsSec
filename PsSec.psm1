@@ -102,14 +102,17 @@ function ping-sweep {
 function force-scan {
     nmap -vvv -Pn -p- -sV -sC -A -oN _nmap_force $ip
 }
-function invoke-vulscan {
+function Invoke-Vulscan {
     nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
 }
-function invoke-vulners {
+function Invoke-Vulners {
     nmap -vv -sV -Pn --script nmap-vulners/ -oA vulners $ip   
 }
 
-function double-vuln {
+function Invoke-Vuln {
+    nmap -Pn -sV --script vuln -oA vuln $ip
+}
+function Double-Vuln {
     function Invoke-Vulscan {
         nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
     }
@@ -120,14 +123,14 @@ function double-vuln {
     Invoke-Vulners
 }
 
-function triple-vuln {
-    function invoke-Vulscan {
+function Triple-Vuln {
+    funDction Invoke-Vulscan {
         $scan1 = nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
-    function invoke-vulners {
+    function Invoke-Vulners {
         $scan2 = nmap -vv -sV -Pn --script nmap-vulners/ $ip   
     }
-    function invoke-vuln {
+    function Invoke-Vuln {
         $scan3 = nmap -vv -sV -Pn --script vuln  $ip
     }
     Invoke-Vulscan
@@ -138,7 +141,7 @@ function triple-vuln {
     Set-Content $scans -Path $Results.Name
 }
 
-function deep-vuln {
+function Deep-Vuln {
     function Invoke-Vulscan {
         $scan1 = nmap -vv -sV -p- -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
@@ -163,15 +166,15 @@ function smbmap-guest {
     smbmap -u "Guest" -p "poop" -H $ip 
 }
 
-function nmb-lookup {
+function Nmb-Lookup {
     nmblookup -A $ip 
 }
 
-function enum4-basic {
+function Enum4-basic {
     enum4linux -a -v
 }
 
-function enum4-deep {
+function Enum4-Deep {
     enum4linux -a -v -d -U -M $ip
 }
 
@@ -189,22 +192,22 @@ function smb-playbook {
     }
     $smbmap = smbmap-guest  
     
-    function nmb-lookup {
+    function Nmb-Lookup {
         nmblookup -A $ip 
     }
-    $nmblookup = nmb-Lookup
+    $nmblookup = Nmb-Lookup
     
-    function enum4-basic {
+    function Enum4-basic {
         enum4linux -a -v $ip
     }
-    $enum4 = enum4-basic
+    $enum4 = Enum4-basic
     
-    function enum4-Deep {
+    function Enum4-Deep {
         enum4linux -a -v -d -U -M $ip
     }
-    $enum4Deep = enum4-Deep
+    $Enum4Deep = Enum4-Deep
     
-    $Results = $nbtscan,$smbmap,$nmblookup,$enum4,$enum4Deep
+    $Results = $nbtscan,$smbmap,$nmblookup,$enum4,$Enum4Deep
     
     New-Item smb-func-results.txt 
     Set-Content $Results -Path smb-func-results.txt
@@ -294,4 +297,8 @@ function Check-NeutrinoUrlInfo {
 function Get-MyIp {
     $myip = Invoke-RestMethod -Method GET -Uri "http://ifconfig.me/ip"
     Write-Output "Your IP is $myip"
+}
+
+function Find-Me {
+    Write-Output "Testing the combine script"
 }

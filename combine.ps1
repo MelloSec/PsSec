@@ -13,3 +13,10 @@ if(!(Test-Path ./PsSec.psm1)){ New-Item ./PsSec.psm1 }
 
 $module = $nmap + $smb + $vuln + $ipsee
 Set-Content ./PsSec.psm1 $module
+
+function Test-Build {
+    $test = Get-Content ./PsSec.psm1
+    $log = $test | Select -Last 20
+    Write-Output $log >> log.txt
+}
+Test-Build

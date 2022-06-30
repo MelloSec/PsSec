@@ -81,14 +81,6 @@ function Get-MyIp {
     Write-Output "Your IP is $myip"
 }
 
-
-
-
-
-
-function test {
-    test
-}
-function test2 {
-    test
+function Find-Me {
+    Write-Output "Testing the combine script"
 }
