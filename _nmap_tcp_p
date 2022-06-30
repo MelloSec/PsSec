@@ -1,0 +1,1 @@
+# Nmap 7.92 scan initiated Thu Jun 30 15:19:49 2022 as: "C:\\Program Files (x86)\\Nmap\\nmap.exe" -sV -sC -p- -T4 -vv -oN _nmap_tcp_p
