@@ -2,6 +2,7 @@
 $path1 = '.\Modules\nmap-module\nmap-module.psm1';
 $path2 = '.\Modules\vulscan-module\vulscan.psm1';
 $path3 = '.\Modules\smb-module\smb-module.psm1';
+$path4 = '.\Modules\ipsee-module\ipsee-module.psm1';
 
 $nmap = Get-Content $path1 
 $smb = Get-Content $path2  
