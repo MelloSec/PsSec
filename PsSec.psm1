@@ -132,11 +132,11 @@ function Double-Vuln {
 }
 
 function Triple-Vuln {
-    funDction Invoke-Vulscan {
+    function Invoke-Vulscan {
         $scan1 = nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
     function Invoke-Vulners {
-        $scan2 = nmap -vv -sV -Pn --script nmap-vulners/ $ip   
+        $scan2 = nmap -vv -sV -Pn --script nmap-vulners $ip   
     }
     function Invoke-Vuln {
         $scan3 = nmap -vv -sV -Pn --script vuln  $ip
