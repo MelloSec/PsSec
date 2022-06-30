@@ -80,3 +80,15 @@ function Get-MyIp {
     $myip = Invoke-RestMethod -Method GET -Uri "http://ifconfig.me/ip"
     Write-Output "Your IP is $myip"
 }
+
+
+
+
+
+
+function test {
+    test
+}
+function test2 {
+    test
+}
