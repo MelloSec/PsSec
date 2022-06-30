@@ -10,9 +10,12 @@ $vuln = Get-Content $path3
 $ipsee = Get-Content $path4
 
 if(!(Test-Path ./PsSec.psm1)){ New-Item ./PsSec.psm1 }
+if(!(Test-Path ./PsSec.ps1)){ New-Item ./PsSec.ps1 }
 
 $module = $nmap + $smb + $vuln + $ipsee
 Set-Content ./PsSec.psm1 $module
+Set-Content ./PsSec.ps1 $module
+
 
 function Test-Build {
     $test = Get-Content ./PsSec.psm1
