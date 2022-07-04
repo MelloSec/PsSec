@@ -17,6 +17,7 @@ Set-Content ./PsSec.psm1 $module
 Set-Content ./PsSec.ps1 $module
 
 
+
 function Test-Build {
     $test = Get-Content ./PsSec.psm1
     $log = $test | Select -Last 15
@@ -25,3 +26,5 @@ function Test-Build {
     Write-Output $date, $msg, $log >> log.txt
 }
 Test-Build
+
+. ./PsSe1

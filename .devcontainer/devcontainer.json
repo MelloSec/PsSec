@@ -29,6 +29,7 @@
 				"VisualStudioExptTeam.vscodeintellicode",
 				"ms-vscode.powershell-preview",
 				"ms-vscode.gitlens",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	},
