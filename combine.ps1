@@ -27,4 +27,4 @@ function Test-Build {
 }
 Test-Build
 
-. ./PsSe1
+. ./PsSec.ps1
