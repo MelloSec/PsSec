@@ -1,5 +1,4 @@
-
-$path1 = '.\Modules\nmap-module\nmap-module.psm1';
+sv-scan$path1 = '.\Modules\nmap-module\nmap-module.psm1';
 $path2 = '.\Modules\vulscan-module\vulscan.psm1';
 $path3 = '.\Modules\smb-module\smb-module.psm1';
 $path4 = '.\Modules\ipsee-module\ipsee.psm1';
@@ -15,8 +14,6 @@ if(!(Test-Path ./PsSec.ps1)){ New-Item ./PsSec.ps1 }
 $module = $nmap + $smb + $vuln + $ipsee
 Set-Content ./PsSec.psm1 $module
 Set-Content ./PsSec.ps1 $module
-
-
 
 function Test-Build {
     $test = Get-Content ./PsSec.psm1
