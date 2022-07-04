@@ -1,0 +1,14 @@
+name: Multiline
+on: [workflow_dispatch]
+
+jobs:
+    build:
+      name: Run Script
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - name: Script
+          run: |
+            ./combine.ps1
+            Write-Host "Combining submodules"
+          shell: pwsh
