@@ -51,8 +51,6 @@ function smb-playbook {
     
     New-Item smb-func-results.txt 
     Set-Content $Results -Path smb-func-results.txt
-    
     Write-Output "Scans complete"
-    #
-    
+
 }
