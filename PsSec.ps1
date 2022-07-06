@@ -308,6 +308,9 @@ function Get-MyIp {
 function Find-Me {
     Write-Output "Testing the combine script"
 }
+$userlist = Get-Content ./modules/mssql/mssql-user.txt
+$passlist = Get-Content ./modules/mssql/mssql-pass.txt
+
 function mssql-scan {
     nmap -sV -p 3306 --script mysql-audit,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-enum,mysql-info,mysql-query,mysql-users,mysql-variables,mysql-vuln-cve2012-2122 -oN _nmap_mssql-scan $ip
 }
