@@ -219,10 +219,8 @@ function smb-playbook {
     
     New-Item smb-func-results.txt 
     Set-Content $Results -Path smb-func-results.txt
-    
     Write-Output "Scans complete"
-    #
-    
+
 }
 function Get-IPInfo {
     [CmdletBinding()]
@@ -309,4 +307,11 @@ function Get-MyIp {
 
 function Find-Me {
     Write-Output "Testing the combine script"
+}
+function mssql-scan {
+    nmap -sV -p 3306 --script mysql-audit,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-enum,mysql-info,mysql-query,mysql-users,mysql-variables,mysql-vuln-cve2012-2122 -oN _nmap_mssql-scan $ip
+}
+
+function mssql-brute {
+    nmap -vv -p 3306 -Pn --script ms-sql-brute --script-args userdb=$userlist,passdb=$passlist $ip
 }
