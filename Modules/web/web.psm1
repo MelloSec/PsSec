@@ -1,16 +1,16 @@
 # need a vanilla
 function web-go {
-    gobuster dir http://$ip -w $word -o goscan.txt
+    gobuster dir -u http://$ip -w $word -o goscan.txt
 }
 
 # gobuster has vhost mode
 function web-vhost {
-    gobuster vhost http://$ip -w $word -o govhost.txt
+    gobuster -v vhost -u http://$ip -w $word -o govhost.txt
 }
 
 # gobuster has dns mode
 function web-dns {
-    gobuster dns http://$ip -w $word -o godns.txt
+    gobuster -v dns http://$ip -w $word -o godns.txt
 }
 
 # a php specific that will use both go and ferox

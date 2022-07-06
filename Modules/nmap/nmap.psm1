@@ -6,6 +6,10 @@ function sv-scan {
     nmap -sV -sC -A -vv -oN _nmap_tcp_sv $ip
 }
 
+function sup-scan {
+    nmap -sN -oN _nmap_sup $ip
+}
+
 function psv-scan {
     nmap -Pn -p- -sV -sC -A -vv -oN _nmap_psv $ip
 }
