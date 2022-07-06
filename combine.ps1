@@ -4,6 +4,8 @@ $smb = Get-Content '.\Modules\smb\smb.psm1'; Set-Content -Path '.\Modules\smb\sm
 $ipsee = Get-Content '.\Modules\ipsee\ipsee.psm1'; Set-Content -Path '.\Modules\ipsee\ipsee.ps1' -Value $ipsee
 $mssql = Get-Content '.\Modules\mssql\mssql.psm1'; Set-Content -Path '.\Modules\mssql\mssql.ps1' -Value $mssql
 $web = Get-Content '.\Modules\web\web.psm1'; Set-content -Path '.\Modules\web\web.ps1' -Value $web
+$dns = Get-Content '.\Modules\dns\dns.psm1'; Set-Content -Path '.\Modules\dns\dns.ps1' -Value $dns
+$ftptelnet = Get-Content '.\Modules\ftptelnet\ftptelnet.psm1'; Set-Content -Path '.\Modules\ftptelnet\ftptelnet.ps1' -Value "$ftptelnet"
 
 
 if(!(Test-Path ./PsSec.psm1)){ New-Item ./PsSec.psm1 }
