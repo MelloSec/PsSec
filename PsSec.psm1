@@ -219,50 +219,98 @@ function force-scan {
     nmap -vvv -Pn -p- -sV -sC -A -oN _nmap_force $ip
 }
 function nbt-scan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     nbtscan -r $ip 
 }
 
 function smbmap-guest {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     smbmap -u "Guest" -p "poop" -H $ip 
 }
 
 function Nmb-Lookup {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     nmblookup -A $ip 
 }
 
 function Enum4-basic {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     enum4linux -a -v
 }
 
 function Enum4-Deep {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     enum4linux -a -v -d -U -M $ip
 }
 
 function smb-list {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     smbclient -L $ip 
 }
 
 function smb-playbook {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     function nbt-scan {
+        param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
         nbtscan -r $ip 
     }
     $nbtscan = nbt-scan
     function smbmap-guest {
+        param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
         smbmap -u "Guest" -p "poop" -H $ip 
     }
     $smbmap = smbmap-guest  
     
     function Nmb-Lookup {
+        param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
         nmblookup -A $ip 
     }
     $nmblookup = Nmb-Lookup
     
     function Enum4-basic {
+        param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
         enum4linux -a -v $ip
     }
     $enum4 = Enum4-basic
     
     function Enum4-Deep {
+        param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
         enum4linux -a -v -d -U -M $ip
     }
     $Enum4Deep = Enum4-Deep
@@ -275,16 +323,32 @@ function smb-playbook {
 
 }
 function Invoke-Vulscan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
 }
 function Invoke-Vulners {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     nmap -vv -sV -Pn --script nmap-vulners/ -oA vulners $ip   
 }
 
 function Invoke-Vuln {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     nmap -Pn -sV --script vuln -oA vuln $ip
 }
 function Double-Vuln {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     function Invoke-Vulscan {
         nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
     }
@@ -296,6 +360,10 @@ function Double-Vuln {
 }
 
 function Triple-Vuln {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     function Invoke-Vulscan {
         $scan1 = nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
@@ -314,6 +382,10 @@ function Triple-Vuln {
 }
 
 function Deep-Vuln {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     function Invoke-Vulscan {
         $scan1 = nmap -vv -sV -p- -Pn -oA vulscan --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
     }
@@ -420,29 +492,53 @@ $userlist = Get-Content 'C:\Users\RleeA\OneDrive\vsWorkspace\Code\GitHubProjects
 $passlist = Get-Content 'C:\Users\RleeA\OneDrive\vsWorkspace\Code\GitHubProjects\PsSec\Modules\mssql\mssql-pass.txt'
 
 function mssql-scan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     nmap -sV -p 3306 --script mysql-audit,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-enum,mysql-info,mysql-query,mysql-users,mysql-variables,mysql-vuln-cve2012-2122 -oN _nmap_mssql-scan $ip
 }
 
 function mssql-brute {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     nmap -vv -p 3306 -Pn --script ms-sql-brute --script-args userdb=$userlist,passdb=$passlist $ip
 }
 # need a vanilla
 function web-go {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )    
     gobuster dir -u http://$ip -w $word -o goscan.txt
 }
 
 # gobuster has vhost mode
 function web-vhost {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     gobuster -v vhost -u http://$ip -w $word -o govhost.txt
 }
 
 # gobuster has dns mode
 function web-dns {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     gobuster -v dns http://$ip -w $word -o godns.txt
 }
 
 # a php specific that will use both go and ferox
 function web-php {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
     gobuster dir http://$ip -w $word -o gophp.txt -x php,php3,php5,html
     feroxbuster 
 }
