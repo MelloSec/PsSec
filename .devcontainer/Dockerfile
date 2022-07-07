@@ -8,6 +8,9 @@ RUN sudo apt install nmap -y
 RUN sudo apt install -y azurecli
 RUN install-module az
 RUN import-module az
+RUN install-module azuread
+RUN import-module azuread
+RUN . ./PsSec.ps1
 
 
 
