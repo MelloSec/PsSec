@@ -488,18 +488,18 @@ function Get-MyIp {
 function Find-Me {
     Write-Output "Testing the combine script"
 }
-$userlist = Get-Content 'C:\Users\RleeA\OneDrive\vsWorkspace\Code\GitHubProjects\PsSec\Modules\mssql\mssql-user.txt'
-$passlist = Get-Content 'C:\Users\RleeA\OneDrive\vsWorkspace\Code\GitHubProjects\PsSec\Modules\mssql\mssql-pass.txt'
+$userlist = Get-Content 'C:\Users\RleeA\OneDrive\vsWorkspace\Code\GitHubProjects\PsSec\Modules\mysql\mysql-user.txt'
+$passlist = Get-Content 'C:\Users\RleeA\OneDrive\vsWorkspace\Code\GitHubProjects\PsSec\Modules\mysql\mysql-pass.txt'
 
-function mssql-scan {
+function mysql-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -sV -p 3306 --script mysql-audit,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-enum,mysql-info,mysql-query,mysql-users,mysql-variables,mysql-vuln-cve2012-2122 -oN _nmap_mssql-scan $ip
+    nmap -sV -p 3306 --script mysql-audit,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-enum,mysql-info,mysql-query,mysql-users,mysql-variables,mysql-vuln-cve2012-2122 -oN _nmap_mysql-scan $ip
 }
 
-function mssql-brute {
+function mysql-brute {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
