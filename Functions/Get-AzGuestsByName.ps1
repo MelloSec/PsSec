@@ -1,4 +1,4 @@
-function Get-AzGuestLogs {
+function Get-AzGuestsByName {
     param(
         [Parameter(Mandatory=$true)]
         [string]$Guest
@@ -18,4 +18,4 @@ function Get-AzGuestLogs {
           Else { Write-Host "No Azure Active Directory sign-in data available for" $G.DisplayName "(" $G.Mail ")" }
     }}
 }
-Get-AzGuestLogs $Guest
+Get-AzGuestsByName $Guest
