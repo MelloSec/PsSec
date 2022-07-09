@@ -1,3 +1,4 @@
+# Modules to combine for main PsSec file
 $nmap = Get-Content '.\Modules\nmap\nmap.psm1'; Set-Content '.\Modules\nmap\nmap.ps1' $nmap
 $vulscan = Get-Content '.\Modules\vulscan\vulscan.psm1'; Set-Content -Path '.\Modules\vulscan\vulscan.ps1' -Value $vulscan
 $smb = Get-Content '.\Modules\smb\smb.psm1'; Set-Content -Path '.\Modules\smb\smb.ps1' -Value $smb
@@ -7,7 +8,11 @@ $web = Get-Content '.\Modules\web\web.psm1'; Set-content -Path '.\Modules\web\we
 $dns = Get-Content '.\Modules\dns\dns.psm1'; Set-Content -Path '.\Modules\dns\dns.ps1' -Value $dns
 $ftptelnet = Get-Content '.\Modules\ftptelnet\ftptelnet.psm1'; Set-Content -Path '.\Modules\ftptelnet\ftptelnet.ps1' -Value "$ftptelnet"
 
-
+# Dot Source latest functions at every combine
+$Path = ".\Functions"
+Get-ChildItem -Path $Path -Filter *.ps1 |ForEach-Object {
+    . $_.FullName
+}
 
 if(!(Test-Path ./PsSec.psm1)){ New-Item ./PsSec.psm1 }
 if(!(Test-Path ./PsSec.ps1)){ New-Item ./PsSec.ps1 }

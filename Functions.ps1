@@ -1,6 +1,3 @@
-# Function to spawn an EC2 instance of our custom image
-
-function Invoke-SorrowsetEc2 {
 $accesskey = ''
 $secretkey = ''
 $sorrowset = 'ami-07c5bfcfd08bee251'
@@ -42,4 +39,3 @@ $params = @{
     SubnetId = $sn.SubnetId
 }
 $ec2 = New-Ec2Instance @params
-}
