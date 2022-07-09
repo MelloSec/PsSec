@@ -8,10 +8,10 @@ $web = Get-Content '.\Modules\web\web.psm1'; Set-content -Path '.\Modules\web\we
 $dns = Get-Content '.\Modules\dns\dns.psm1'; Set-Content -Path '.\Modules\dns\dns.ps1' -Value $dns
 $ftptelnet = Get-Content '.\Modules\ftptelnet\ftptelnet.psm1'; Set-Content -Path '.\Modules\ftptelnet\ftptelnet.ps1' -Value "$ftptelnet"
 
-# Dot Source latest functions at every combine
+
 $Path = ".\Functions"
 Get-ChildItem -Path $Path -Filter *.ps1 |ForEach-Object {
-    . $_.FullName
+    Get-Content $_.FullName | Set-Content -Path ./Functions.ps1
 }
 
 if(!(Test-Path ./PsSec.psm1)){ New-Item ./PsSec.psm1 }
