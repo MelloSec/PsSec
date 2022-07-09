@@ -1,3 +1,42 @@
+# Dot Source latest functions
+function Dotsource-Functions {
+    $Path = ".\Functions"
+    Get-ChildItem -Path $Path -Filter *.ps1 |ForEach-Object {
+        . $_.FullName
+    }
+}
+# Function to search Azure tenant for Guest users with a specific name
+
+function Get-AzGuestsByName {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Guest
+    )
+    $Guests = Get-AzureADUser -SearchString $Guest
+    ForEach ($G in $Guests) {
+       If ($G.UserType -eq "Guest") {
+          $UserLastLogonDate = $Null
+          Try {
+             $UserObjectId = $G.ObjectId
+             $UserLastLogonDate = (Get-AzureADAuditSignInLogs -Top 1  -Filter "userid eq '$UserObjectId' and status/errorCode eq 0").CreatedDateTime }
+          Catch {
+             Write-Host "Can't read Azure Active Directory Sign in Logs" }
+          If ($UserLastLogonDate -ne $Null) {
+             $LastSignInDate = Get-Date($UserLastLogonDate); $Days = New-TimeSpan($LastSignInDate)
+             Write-Host "Guest" $G.DisplayName "last signed in on" $LastSignInDate "or" $Days.Days "days ago"  }
+          Else { Write-Host "No Azure Active Directory sign-in data available for" $G.DisplayName "(" $G.Mail ")" }
+    }}
+}
+Get-AzGuestsByName $Guest
+# Function to get your current Ip address
+
+function Get-MyIp {
+    Invoke-RestMethod -Method GET -Uri "http://ifconfig.me/ip"
+}
+$ip = Get-MyIp
+# Function to spawn an EC2 instance of our custom image
+
+function Invoke-SorrowsetEc2 {
 $accesskey = ''
 $secretkey = ''
 $sorrowset = 'ami-07c5bfcfd08bee251'
@@ -39,3 +78,4 @@ $params = @{
     SubnetId = $sn.SubnetId
 }
 $ec2 = New-Ec2Instance @params
+}
