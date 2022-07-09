@@ -1,3 +1,5 @@
+# Function to search Azure tenant for Guest users with a specific name
+
 function Get-AzGuestsByName {
     param(
         [Parameter(Mandatory=$true)]
