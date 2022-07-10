@@ -7,17 +7,20 @@ $mysql = Get-Content '.\Modules\mysql\mysql.psm1'; Set-Content -Path '.\Modules\
 $web = Get-Content '.\Modules\web\web.psm1'; Set-content -Path '.\Modules\web\web.ps1' -Value $web
 $dns = Get-Content '.\Modules\dns\dns.psm1'; Set-Content -Path '.\Modules\dns\dns.ps1' -Value $dns
 $ftptelnet = Get-Content '.\Modules\ftptelnet\ftptelnet.psm1'; Set-Content -Path '.\Modules\ftptelnet\ftptelnet.ps1' -Value "$ftptelnet"
+$docker = Get-Content '.\Modules\docker\docker.psm1'; Set-Content -Path '.\Modules\docker\docker.ps1' -Value $docker
+
 
 
 $Path = ".\Functions"
-Get-ChildItem -Path $Path -Filter *.ps1 |ForEach-Object {
-    Get-Content $_.FullName | Set-Content -Path ./Functions.ps1
-}
+$functions = (Get-ChildItem -Path $Path -Filter *.ps1 |ForEach-Object {
+     Get-Content $_.FullName
+})
+Set-Content $functions -Path ./Functions.ps1
 
 if(!(Test-Path ./PsSec.psm1)){ New-Item ./PsSec.psm1 }
 if(!(Test-Path ./PsSec.ps1)){ New-Item ./PsSec.ps1 }
 
-$module = $nmap + $smb + $vulscan + $ipsee + $mysql + $web
+$module = $nmap + $smb + $vulscan + $ipsee + $mysql + $web + $docker
 Set-Content ./PsSec.psm1 $module
 Set-Content ./PsSec.ps1 $module
 
@@ -31,4 +34,5 @@ function Test-Build {
 }
 Test-Build
 
+. ./Functions/Dotsource-Functions.ps1
 . ./PsSec.ps1

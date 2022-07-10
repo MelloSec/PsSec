@@ -14,12 +14,19 @@ function sv-scan {
     nmap -sV -sC -A -vv -oN _nmap_tcp_sv $ip
 }
 
-function sup-scan {
+function sn-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -sN -oN _nmap_sup $ip
+    nmap -sN -oN _nmap_sn $ip
+}
+function sp-scan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    nmap -sP -oN _nmap_sp $ip
 }
 
 function psv-scan {
