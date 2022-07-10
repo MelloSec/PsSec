@@ -29,12 +29,12 @@ function sp-scan {
     nmap -sP -oN _nmap_sp $ip
 }
 
-function psv-scan {
+function svp-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_psv $ip
+    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_svp $ip
 }
 
 
