@@ -12,7 +12,19 @@ Now just run 'Quick-Scan', etc
 
 ## Nmap Functions
 
-![image](https://user-images.githubusercontent.com/65114647/175846428-63a434a9-2820-475b-8f4b-a5dcffb14a75.png)
+For the vuln scanning, you should install two additional vulnerability scripts for NMAP.
+
+Vulscan - 
+
+git clone https://github.com/scipag/vulscan scipag_vulscan
+ln -s `pwd`/scipag_vulscan /usr/share/nmap/scripts/vulscan   
+
+Vulners -
+
+cd /usr/share/nmap/scripts/
+git clone https://github.com/vulnersCom/nmap-vulners.git
+
+
 
 'Quick Scan'
 'Scan-Subnet'
@@ -31,14 +43,6 @@ Now just run 'Quick-Scan', etc
 
 ## SMB Functions
 
-![image](https://user-images.githubusercontent.com/65114647/175846365-3c5cc6bd-c966-4360-a22c-9311f202f1e3.png)
-
-
-'nbt-scan'
-'smbmap-guest'
-'Nmb-Lookup'
-'Enum4-basic'
-'Enum4-Deep'
 
 Each Cmdlet runs one or more scans and outputs to files in the current directory
 

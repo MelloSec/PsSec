@@ -90,6 +90,14 @@ function suv-scan {
     )
     nmap -sUV -Pn -vv --top-ports 1000 -oN _nmap_suv $ip
 }
+function suc-scan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    nmap -sUCV -Pn -vv --top-ports 1000 -oN _nmap_suc $ip
+}
+
 function psuv-scan {
     param(
         [Parameter(Mandatory=$true)]

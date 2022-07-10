@@ -3,7 +3,7 @@ function Invoke-Vulscan {
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
+    nmap -vv -sV -Pn --script --script=vulscan/vulscan.nse -oA vulscan $ip
 }
 function Invoke-Vulners {
     param(
@@ -26,7 +26,7 @@ function Double-Vuln {
         [string]$ip
     )
     function Invoke-Vulscan {
-        nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
+        nmap -vv -sV -Pn --script=vulscan/vulscan.nse -oA vulscan $ip
     }
     function Invoke-Vulners {
         nmap -vv -sV -Pn --script nmap-vulners/ -oA vulners $ip   
@@ -41,7 +41,7 @@ function Triple-Vuln {
         [string]$ip
     )
     function Invoke-Vulscan {
-        $scan1 = nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
+        $scan1 = nmap -vv -sV -Pn --script=vulscan/vulscan.nse $ip
     }
     function Invoke-Vulners {
         $scan2 = nmap -vv -sV -Pn --script nmap-vulners $ip   
@@ -63,7 +63,7 @@ function Deep-Vuln {
         [string]$ip
     )
     function Invoke-Vulscan {
-        $scan1 = nmap -vv -sV -p- -Pn -oA vulscan --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
+        $scan1 = nmap -vv -sV -p- -Pn -oA vulscan --script --script=vulscan/vulscan.nse $ip
     }
     function Invoke-Vulners {
         $scan2 = nmap -vv -sV -p- -Pn -oA  vulners --script nmap-vulners/ $ip   
@@ -78,3 +78,4 @@ function Deep-Vuln {
     $Results  = New-Item deep-vuln.txt 
     Set-Content $scans -Path $Results.Name
 }
+nmap -sV --script=vulscan/vulscan.nse www.example.com

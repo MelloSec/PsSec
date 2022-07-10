@@ -62,3 +62,19 @@ function testssl-tpf {
     )
     docker run --rm -ti drwetter/testssl.sh:3.0 -t --parallel --fast  $uri
 }
+
+function enum4docker-as {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run -t enum4linux-ng -As $ip > enum4ng-as.txt
+}
+
+function enum4docker-a {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run -t enum4linux-ng -A $ip > enum4ng-a.txt
+}
