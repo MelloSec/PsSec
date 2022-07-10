@@ -29,12 +29,12 @@ function sp-scan {
     nmap -sP -oN _nmap_sp $ip
 }
 
-function svp-scan {
+function psv-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_svp $ip
+    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_psv $ip
 }
 
 
@@ -90,6 +90,14 @@ function suv-scan {
     )
     nmap -sUV -Pn -vv --top-ports 1000 -oN _nmap_suv $ip
 }
+function suc-scan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    nmap -sUCV -Pn -vv --top-ports 1000 -oN _nmap_suc $ip
+}
+
 function psuv-scan {
     param(
         [Parameter(Mandatory=$true)]
@@ -265,6 +273,22 @@ function Enum4-Deep {
     enum4linux -a -v -d -U -M $ip
 }
 
+function enum4docker-as {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run -t enum4linux-ng -As $ip > enum4ng-as.txt
+}
+
+function enum4docker-a {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run -t enum4linux-ng -A $ip > enum4ng-a.txt
+}
+
 function smb-list {
     param(
         [Parameter(Mandatory=$true)]
@@ -334,7 +358,7 @@ function Invoke-Vulscan {
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
+    nmap -vv -sV -Pn --script --script=vulscan/vulscan.nse -oA vulscan $ip
 }
 function Invoke-Vulners {
     param(
@@ -357,7 +381,7 @@ function Double-Vuln {
         [string]$ip
     )
     function Invoke-Vulscan {
-        nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse -oA vulscan $ip
+        nmap -vv -sV -Pn --script=vulscan/vulscan.nse -oA vulscan $ip
     }
     function Invoke-Vulners {
         nmap -vv -sV -Pn --script nmap-vulners/ -oA vulners $ip   
@@ -372,7 +396,7 @@ function Triple-Vuln {
         [string]$ip
     )
     function Invoke-Vulscan {
-        $scan1 = nmap -vv -sV -Pn --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
+        $scan1 = nmap -vv -sV -Pn --script=vulscan/vulscan.nse $ip
     }
     function Invoke-Vulners {
         $scan2 = nmap -vv -sV -Pn --script nmap-vulners $ip   
@@ -394,7 +418,7 @@ function Deep-Vuln {
         [string]$ip
     )
     function Invoke-Vulscan {
-        $scan1 = nmap -vv -sV -p- -Pn -oA vulscan --script /home/mellonaut/vuln/scipag_vulscan/vulscan.nse $ip
+        $scan1 = nmap -vv -sV -p- -Pn -oA vulscan --script --script=vulscan/vulscan.nse $ip
     }
     function Invoke-Vulners {
         $scan2 = nmap -vv -sV -p- -Pn -oA  vulners --script nmap-vulners/ $ip   
@@ -409,6 +433,7 @@ function Deep-Vuln {
     $Results  = New-Item deep-vuln.txt 
     Set-Content $scans -Path $Results.Name
 }
+nmap -sV --script=vulscan/vulscan.nse www.example.com
 function Get-IPInfo {
     [CmdletBinding()]
     param(
@@ -517,16 +542,18 @@ function mysql-brute {
 function web-go {
     param(
         [Parameter(Mandatory=$true)]
-        [string]$ip
+        [string]$ip  
     )    
-    gobuster dir -u http://$ip -w $word -o goscan.txt
+    gobuster dir -u http://$ip -w 'C:\Users\RleeA\wordlists\common.txt' -o common.txt
 }
 
 # gobuster has vhost mode
 function web-vhost {
     param(
         [Parameter(Mandatory=$true)]
-        [string]$ip
+        [string]$ip,
+        [Parameter(Mandatory=$true)]
+        [string]$word  
     )
     gobuster -v vhost -u http://$ip -w $word -o govhost.txt
 }
@@ -535,7 +562,9 @@ function web-vhost {
 function web-dns {
     param(
         [Parameter(Mandatory=$true)]
-        [string]$ip
+        [string]$ip,
+        [Parameter(Mandatory=$true)]
+        [string]$word
     )
     gobuster -v dns http://$ip -w $word -o godns.txt
 }
@@ -544,7 +573,9 @@ function web-dns {
 function web-php {
     param(
         [Parameter(Mandatory=$true)]
-        [string]$ip
+        [string]$ip,
+        [Parameter(Mandatory=$true)]
+        [string]$word  
     )
     gobuster dir http://$ip -w $word -o gophp.txt -x php,php3,php5,html
     feroxbuster 
@@ -556,7 +587,7 @@ function web-php {
 # # nikto scan
 # func nikto-scan
 
-$domain = "google.com"
+$domain = "$ip"
 $uri = "https://$domain"
 
 function testssl {
@@ -619,4 +650,26 @@ function testssl-tpf {
         [string]$uri
     )
     docker run --rm -ti drwetter/testssl.sh:3.0 -t --parallel --fast  $uri
+}
+
+# Enum4linux-ng All-Simple
+function enum4docker-as {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run -t enum4linux-ng -As $ip > enum4ng-as.txt
+}
+
+# Enum4linux-ng All
+function enum4docker-a {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run -t enum4linux-ng -A $ip > enum4ng-a.txt
+}
+
+function kali-bash {
+    docker run -ti kalilinux/kali-rolling /bin/bash
 }

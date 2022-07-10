@@ -38,6 +38,22 @@ function Enum4-Deep {
     enum4linux -a -v -d -U -M $ip
 }
 
+function enum4docker-as {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run -t enum4linux-ng -As $ip > enum4ng-as.txt
+}
+
+function enum4docker-a {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run -t enum4linux-ng -A $ip > enum4ng-a.txt
+}
+
 function smb-list {
     param(
         [Parameter(Mandatory=$true)]

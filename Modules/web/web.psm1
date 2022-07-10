@@ -22,9 +22,9 @@ function web-vhost {
 function web-dns {
     param(
         [Parameter(Mandatory=$true)]
-        [string]$ip
+        [string]$ip,
         [Parameter(Mandatory=$true)]
-        [string]$word,  
+        [string]$word
     )
     gobuster -v dns http://$ip -w $word -o godns.txt
 }
