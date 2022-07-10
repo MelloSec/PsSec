@@ -1,4 +1,4 @@
-$domain = "google.com"
+$domain = "$ip"
 $uri = "https://$domain"
 
 function testssl {
