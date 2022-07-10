@@ -14,12 +14,19 @@ function sv-scan {
     nmap -sV -sC -A -vv -oN _nmap_tcp_sv $ip
 }
 
-function sup-scan {
+function sn-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -sN -oN _nmap_sup $ip
+    nmap -sN -oN _nmap_sn $ip
+}
+function sp-scan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    nmap -sP -oN _nmap_sp $ip
 }
 
 function psv-scan {
@@ -549,3 +556,67 @@ function web-php {
 # # nikto scan
 # func nikto-scan
 
+$domain = "google.com"
+$uri = "https://$domain"
+
+function testssl {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$uri
+    )
+    docker run --rm -ti drwetter/testssl.sh:3.0 $uri
+}
+
+function testssl-p {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$uri
+    )
+    docker run --rm -ti drwetter/testssl.sh:3.0 --parallel $uri
+}
+function testssl-e {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$uri
+    )
+    docker run --rm -ti drwetter/testssl.sh:3.0 -e $uri
+}
+
+function testssl-epf {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$uri
+    )
+    docker run --rm -ti drwetter/testssl.sh:3.0 -e --parallel --fast  $uri
+}
+
+function testssl-p {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$uri
+    )
+    docker run --rm -ti drwetter/testssl.sh:3.0 -p $uri
+}
+function testssl-ppf {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$uri
+    )
+    docker run --rm -ti drwetter/testssl.sh:3.0 -p --parallel --fast  $uri
+}
+
+function testssl-t {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$uri
+    )
+    docker run --rm -ti drwetter/testssl.sh:3.0 -t $uri
+}
+
+function testssl-tpf {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$uri
+    )
+    docker run --rm -ti drwetter/testssl.sh:3.0 -t --parallel --fast  $uri
+}
