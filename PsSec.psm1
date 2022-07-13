@@ -433,7 +433,6 @@ function Deep-Vuln {
     $Results  = New-Item deep-vuln.txt 
     Set-Content $scans -Path $Results.Name
 }
-nmap -sV --script=vulscan/vulscan.nse www.example.com
 function Get-IPInfo {
     [CmdletBinding()]
     param(
@@ -658,16 +657,32 @@ function enum4docker-as {
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    docker run -t enum4linux-ng -As $ip > enum4ng-as.txt
+    docker run --rm -ti enum4linux-ng -As $ip -oA enum4docker-as
 }
 
-# Enum4linux-ng All
-function enum4docker-a {
+# Enum4linux-ng All + enumerate services
+function enum4docker-ac {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    docker run -t enum4linux-ng -A $ip > enum4ng-a.txt
+    docker run --rm -ti enum4linux-ng -A -C $ip -oA enum4docker-ac
+}
+
+function enum4docker-user {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run --rm -ti enum4linux-ng -A -u Tester -p 'Passin!' $ip -oA enum4docker-user 
+}
+
+function enum4docker-damn {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    docker run --rm -ti enum4linux-ng -A -C -S -G -Gm -U -N -P -d -v $ip -oA enum4docker-damn 
 }
 
 function kali-bash {

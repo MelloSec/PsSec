@@ -78,4 +78,3 @@ function Deep-Vuln {
     $Results  = New-Item deep-vuln.txt 
     Set-Content $scans -Path $Results.Name
 }
-nmap -sV --script=vulscan/vulscan.nse www.example.com
