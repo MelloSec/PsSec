@@ -23,6 +23,7 @@ if(!(Test-Path ./PsSec.ps1)){ New-Item ./PsSec.ps1 }
 $module = $nmap + $smb + $vulscan + $ipsee + $mysql + $web + $docker
 Set-Content ./PsSec.psm1 $module
 Set-Content ./PsSec.ps1 $module
+Set-Content "~\OneDrive\vsWorkspace\CTF\PsSec-CTF.ps1" $module
 
 
 function Test-Build {

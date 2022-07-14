@@ -203,12 +203,12 @@ function enum-snmp {
     nmap -sU --open -p 161 -oN _nmap_open_snmp $ip
 }
 
-function subnet-scan {
+function sn-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -T5 -n -sn -oN _nmap_subnet $ip 
+    nmap -T5 -sn -oA UP $ip | grep Up | cut -d ' ' -f 2
 }
 function 5000-scan {
     param(
