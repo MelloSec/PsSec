@@ -97,6 +97,20 @@ function enum4docker-damn {
     docker run --rm -ti enum4linux-ng -A -C -S -G -Gm -U -N -P -d -v $ip -oA enum4docker-damn 
 }
 
-function kali-bash {
-    docker run -ti kalilinux/kali-rolling /bin/bash
+function start-msf {
+    docker run --rm -it -u 0 --network msf --name msf --ip 172.18.0.3 -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" -p 8443-8500:8443-8500 metasploitframework/metasploit-framework
+}
+
+function start-kali {
+    docker run -ti --rm --network msf --ip 172.18.0.4 -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" -p 8443-8500:8443-8500 -p 4545:4444 -p 7474:7474  sunnv1 /usr/bin/pwsh
+}
+
+function start-cme {
+    docker run -it --entrypoint=/bin/bash --network msf --ip 172.18.0.6 --name crackmapexec -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" byt3bl33d3r/crackmapexec
+}
+
+function get-naked {
+    docker run -u 0 --network msf --name msf --ip 172.18.0.3 -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" -p 8443-8500:8443-8500 metasploitframework/metasploit-framework
+    docker run -ti --network msf --ip 172.18.0.4 -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" -p 8443-8500:8443-8500 -p 4545:4444 -p 7474:7474  sunnv1 /usr/bin/pwsh
+    docker run --network msf --ip 172.18.0.6 --name crackmapexec -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" byt3bl33d3r/crackmapexec
 }

@@ -6,12 +6,12 @@ function os-scan {
     nmap -O --osscan-guess -sV -vv -oN _nmap_os_scan $ip
 }
 
-function sv-scan {
+function svc-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )    
-    nmap -sV -sC -A -vv -oN _nmap_tcp_sv $ip
+    nmap -Pn -sV -sC -A -vv -oN _nmap_tcp_sv $ip
 }
 
 function sn-scan {
@@ -29,12 +29,20 @@ function sp-scan {
     nmap -sP -oN _nmap_sp $ip
 }
 
-function psv-scan {
+function sup-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_psv $ip
+    nmap -n -sn $ip -oG - | awk '/Up$/{print $2}'
+}
+
+function svp-scan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_svp $ip
 }
 
 
@@ -75,21 +83,15 @@ function su-scan {
     nmap -sU -Pn -vv --top-ports 1000 -oN _nmap_su $ip
 }
 
-function psu-scan {
-    nmap -sU -p- -Pn -
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$ip
-    )vv --top-ports 1000 -oN _nmap_psu $ip
-}
-
-function suv-scan {
+function su1k-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -sUV -Pn -vv --top-ports 1000 -oN _nmap_suv $ip
+    nmap -sU -p- -Pn --top-ports 1000 -oN _nmap_su1k $ip
 }
+
+
 function suc-scan {
     param(
         [Parameter(Mandatory=$true)]
@@ -98,12 +100,12 @@ function suc-scan {
     nmap -sUCV -Pn -vv --top-ports 1000 -oN _nmap_suc $ip
 }
 
-function psuv-scan {
+function suv-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -sUV -Pn -p- -vv -T4 --max-retries 0 --top-ports 1000 -oN _nmap_psuv $ip
+    nmap -sUV -Pn -p- -T4 --max-retries 0 --top-ports 1000 -oN _nmap_psuv $ip
 }
 function udp-scan {
     param(
@@ -116,16 +118,6 @@ function udp-scan {
     $Results  = New-Item udp-scan.txt 
     Set-Content $scans -Path $Results.Name
 }
-
-function old-udp {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$ip
-    )
-    nmap -sU -vv --top-ports 1000 -oN _nmap_udp_1000 $ip
-    nmap -sU --Pn vv -T4 --max-retries 0 -oN _nmap_udp_2 $ip
-}
-
 
 function long-scan {
     param(
@@ -685,6 +677,20 @@ function enum4docker-damn {
     docker run --rm -ti enum4linux-ng -A -C -S -G -Gm -U -N -P -d -v $ip -oA enum4docker-damn 
 }
 
-function kali-bash {
-    docker run -ti kalilinux/kali-rolling /bin/bash
+function start-msf {
+    docker run --rm -it -u 0 --network msf --name msf --ip 172.18.0.3 -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" -p 8443-8500:8443-8500 metasploitframework/metasploit-framework
+}
+
+function start-kali {
+    docker run -ti --rm --network msf --ip 172.18.0.4 -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" -p 8443-8500:8443-8500 -p 4545:4444 -p 7474:7474  sunnv1 /usr/bin/pwsh
+}
+
+function start-cme {
+    docker run -it --entrypoint=/bin/bash --network msf --ip 172.18.0.6 --name crackmapexec -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" byt3bl33d3r/crackmapexec
+}
+
+function get-naked {
+    docker run -u 0 --network msf --name msf --ip 172.18.0.3 -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" -p 8443-8500:8443-8500 metasploitframework/metasploit-framework
+    docker run -ti --network msf --ip 172.18.0.4 -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" -p 8443-8500:8443-8500 -p 4545:4444 -p 7474:7474  sunnv1 /usr/bin/pwsh
+    docker run --network msf --ip 172.18.0.6 --name crackmapexec -v "${HOME}\OneDrive\vsWorkspace\CTF:/CTF" byt3bl33d3r/crackmapexec
 }

@@ -6,12 +6,12 @@ function os-scan {
     nmap -O --osscan-guess -sV -vv -oN _nmap_os_scan $ip
 }
 
-function sv-scan {
+function svc-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )    
-    nmap -sV -sC -A -vv -oN _nmap_tcp_sv $ip
+    nmap -Pn -sV -sC -A -vv -oN _nmap_tcp_sv $ip
 }
 
 function sn-scan {
@@ -29,12 +29,20 @@ function sp-scan {
     nmap -sP -oN _nmap_sp $ip
 }
 
-function psv-scan {
+function sup-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_psv $ip
+    nmap -n -sn $ip -oG - | awk '/Up$/{print $2}'
+}
+
+function svp-scan {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ip
+    )
+    nmap -Pn -p- -sV -sC -A -vv -oN _nmap_svp $ip
 }
 
 
@@ -75,21 +83,15 @@ function su-scan {
     nmap -sU -Pn -vv --top-ports 1000 -oN _nmap_su $ip
 }
 
-function psu-scan {
-    nmap -sU -p- -Pn -
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$ip
-    )vv --top-ports 1000 -oN _nmap_psu $ip
-}
-
-function suv-scan {
+function su1k-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -sUV -Pn -vv --top-ports 1000 -oN _nmap_suv $ip
+    nmap -sU -p- -Pn --top-ports 1000 -oN _nmap_su1k $ip
 }
+
+
 function suc-scan {
     param(
         [Parameter(Mandatory=$true)]
@@ -98,12 +100,12 @@ function suc-scan {
     nmap -sUCV -Pn -vv --top-ports 1000 -oN _nmap_suc $ip
 }
 
-function psuv-scan {
+function suv-scan {
     param(
         [Parameter(Mandatory=$true)]
         [string]$ip
     )
-    nmap -sUV -Pn -p- -vv -T4 --max-retries 0 --top-ports 1000 -oN _nmap_psuv $ip
+    nmap -sUV -Pn -p- -T4 --max-retries 0 --top-ports 1000 -oN _nmap_psuv $ip
 }
 function udp-scan {
     param(
@@ -116,16 +118,6 @@ function udp-scan {
     $Results  = New-Item udp-scan.txt 
     Set-Content $scans -Path $Results.Name
 }
-
-function old-udp {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$ip
-    )
-    nmap -sU -vv --top-ports 1000 -oN _nmap_udp_1000 $ip
-    nmap -sU --Pn vv -T4 --max-retries 0 -oN _nmap_udp_2 $ip
-}
-
 
 function long-scan {
     param(
